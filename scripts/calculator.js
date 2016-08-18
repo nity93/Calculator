@@ -119,13 +119,20 @@ function performCalculation(param){
 			}
 }
 // performs the command of a Backspace button by deleteing the value before.
-function performBackspace(){
-           for(var i = 0; i < inputs.length; i++){
-       if(value2 && operation == null){
-         delete value1;
-       }else{
-         delete value2;
-       }
+    function performBackspace(){
+          var workingValue = "";
+          var inputIndex = 0;
+          if(operator == null){
+              workingValue = inputs[0];
+              inputIndex = 0;
+          }else
+          {
+              workingValue = inputs[2];
+              inputIndex = 2;
+          }
+          workingValue = workingValue.substring(0, workingValue.length-2);
+          updateDisplay(workingValue);
+          inputs[inputIndex] = workingValue;
      }
 
 	// Adds to numbers and displays sum in the result input box.
