@@ -191,4 +191,4 @@ function performCalculation(param){
              catch(ex) {
          console.log('oops!')
        }                           
-     } }
+     } 
