@@ -120,6 +120,7 @@ function performCalculation(param){
 }
 // performs the command of a Backspace button by deleteing the value before.
     function performBackspace(){
+          var operator = inputs[1];
           var workingValue = "";
           var inputIndex = 0;
           if(operator == null){
@@ -130,7 +131,7 @@ function performCalculation(param){
               workingValue = inputs[2];
               inputIndex = 2;
           }
-          workingValue = workingValue.substring(0, workingValue.length-2);
+          workingValue = workingValue.substring(0, workingValue.length-1);
           updateDisplay(workingValue);
           inputs[inputIndex] = workingValue;
      }
