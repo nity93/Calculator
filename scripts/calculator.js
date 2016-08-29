@@ -90,7 +90,7 @@ function updateInputs(param){
 
 //displays the value that has been passed in on the calculator display.
 function updateDisplay(value){
-  $('#displayLabel').val(value);
+  $('#displayLabel').text(value);
 }
 
 function getDisplay(){
