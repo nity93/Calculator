@@ -28,6 +28,9 @@ var Calculator = {
         console.log("here");
         performBackspace();
         break;
+        case ".":
+        captureDecimal(param);
+        break;
         //if not an operator then process the numeric value.
         default:
           updateInputs(param);
@@ -44,6 +47,18 @@ function clearCalculator(){
   inputs = [null,null,null];
   updateDisplay("0");
 }
+function captureDecimal(param){
+  var value = getDisplay();
+  if( value != null || value != ""){
+
+      if(value.indexOf(".") < 0){
+         value += param;
+      } else{
+        value = "0" + param;
+      }
+     } 
+   updateDisplay(value);
+}
 
 //determines if user is entering first value or second value and updates inputs array as well as the display.
 //based on the prescense of the operator.
@@ -54,17 +69,18 @@ function updateInputs(param){
 
   if(operator == null){
     if(value1 == null){
-      value1 = param;
+          value1 = param;
     } else {
-      value1 = value1 + param;
+          value1 = value1 + param;
     }
     inputs[0] = value1;
     updateDisplay(value1);
-  } else {
+  }else {
     if(value2 == null){
-      value2 = param;
-    } else {
-      value2 = value2 + param;
+           value2 = param;
+    }
+     else {
+           value2 = param;
     }
     inputs[2] = value2;
     updateDisplay(value2);
@@ -74,9 +90,12 @@ function updateInputs(param){
 
 //displays the value that has been passed in on the calculator display.
 function updateDisplay(value){
-  $('#displayLabel').text(value);
+  $('#displayLabel').val(value);
 }
 
+function getDisplay(){
+  return $('#displayLabel').text();
+}
 //perform calculation based on the operator that has been entered as passed in 
 //in the param parameter.
 function performCalculation(param){
@@ -84,15 +103,14 @@ function performCalculation(param){
       console.log("logging " + param + " from pc function");
 
       //set a default result to 0.
-			var result = 0;
-
+			var firstResult = 0;
+     
       try {
         
-          if(param == "="){
+          if(param != "="){
 
-          }else{
             inputs[1] = param;
-          }
+          
       
 			    var value1 = inputs[0];
           var operation= inputs[1];
@@ -102,15 +120,34 @@ function performCalculation(param){
           try{
               if(value1 != null && value2 != null){
                 console.log("performing calculation");
-                result = eval(Number(value1) + operation + Number(value2));
-                console.log(result);
-                updateDisplay(result);
-              }
-            } catch (ex){
+                firstResult = eval(Number(value1) + operation + Number(value2));
+                console.log(firstResult);
+                updateDisplay(firstResult);
+                inputs[0] = firstResult;
 
+              }
+            } catch (ex){ }
+
+          }else{
+              var value1 = inputs[0];
+              var operation= inputs[1];
+              var value2 = inputs[2];
+      
+
+            try{
+                if(value1 != null && value2 != null){
+                  console.log("performing calculation");
+                  firstResult = eval(Number(value1) + operation + Number(value2));
+                  console.log(firstResult);
+                  updateDisplay(firstResult);
+                  inputs[0] = firstResult;
+
+              }
+            } catch (ex){ }
+                inputs = [null,null,null];
           }
 
-              console.log(result);
+              console.log(firstResult);
 			}
 			catch( ex ) {
   				
