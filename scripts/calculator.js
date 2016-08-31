@@ -53,9 +53,11 @@ function captureDecimal(param){
 
       if(value.indexOf(".") < 0){
          value += param;
+         inputs[0]=value;
       } else{
         value = "0" + param;
       }
+      
      } 
    updateDisplay(value);
 }
@@ -208,7 +210,7 @@ function performCalculation(param){
                var difference = Number(value1) - Number(value2);
                //displays the difference in the input box.
                document.getElementById('SubtractResult').value =difference;
-             
+              
              }
        catch(ex) {
          console.log('oops!')
@@ -223,6 +225,9 @@ function performCalculation(param){
                 var value2= document.getElementById('multiplyvalue2').value;
                 
                 var product = Number(value1) * Number(value2);
+
+        
+                
                   
                document.getElementById('MultiplyResult').value = product;
               }
