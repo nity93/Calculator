@@ -55,7 +55,7 @@ function captureDecimal(param){
          value += param;
          inputs[0]=value;
       } else{
-        value = "0" + param;
+        value = "0" + param;       
       }
       
      } 
