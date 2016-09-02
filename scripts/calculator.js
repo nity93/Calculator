@@ -85,7 +85,7 @@ function performCalculation(param){
 
       //set a default result to 0.
 			var result = 0;
-
+      var roundedResult = 0;
       try {
         
           if(param == "="){
@@ -97,20 +97,21 @@ function performCalculation(param){
 			    var value1 = inputs[0];
           var operation= inputs[1];
           var value2 = inputs[2];
-      
+           
 
           try{
               if(value1 != null && value2 != null){
                 console.log("performing calculation");
                 result = eval(Number(value1) + operation + Number(value2));
-                console.log(result);
-                updateDisplay(result);
+                roundedResult =  result.toFixed(9);
+                console.log(roundedResult);
+                updateDisplay(roundedResult);
               }
             } catch (ex){
 
           }
 
-              console.log(result);
+              console.log(roundedResult);
 			}
 			catch( ex ) {
   				
