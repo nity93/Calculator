@@ -105,14 +105,13 @@ function performCalculation(param){
                 console.log("performing calculation");
                 result = eval(Number(value1) + operation + Number(value2));
                 var numberConverter = result.toString();
-                  if(numberConverter.length > 19){
+                  if(numberConverter.length > 18 || numberConverter.length == 18){
                       if(numberConverter.indexOf(".") != -1){
-                           result = result.toFixed(7);
+                           result = result.toFixed(9);
                       }else{
-                           result = result.toFixed(18);
+                           result = Math.floor(result);
                       }
                   }
-               // roundedResult =  result.toFixed(9);
                 console.log(result);
                 updateDisplay(result);
               }
