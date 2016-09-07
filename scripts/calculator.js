@@ -85,7 +85,8 @@ function performCalculation(param){
 
       //set a default result to 0.
 			var result = 0;
-      var roundedResult = 0;
+      //var roundedResult = 0;
+      
       try {
         
           if(param == "="){
@@ -103,15 +104,23 @@ function performCalculation(param){
               if(value1 != null && value2 != null){
                 console.log("performing calculation");
                 result = eval(Number(value1) + operation + Number(value2));
-                roundedResult =  result.toFixed(9);
-                console.log(roundedResult);
-                updateDisplay(roundedResult);
+                var numberConverter = result.toString();
+                  if(numberConverter.length > 19){
+                      if(numberConverter.indexOf(".") != -1){
+                           result = result.toFixed(7);
+                      }else{
+                           result = result.toFixed(18);
+                      }
+                  }
+               // roundedResult =  result.toFixed(9);
+                console.log(result);
+                updateDisplay(result);
               }
             } catch (ex){
 
           }
 
-              console.log(roundedResult);
+              console.log(result);
 			}
 			catch( ex ) {
   				
