@@ -109,7 +109,7 @@ function performCalculation(param){
                       if(numberConverter.indexOf(".") != -1){
                            result = result.toFixed(9);
                       }else{
-                           result = Math.floor(result);
+                           result = Math.round(result);
                       }
                   }
                 console.log(result);
