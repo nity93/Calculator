@@ -105,8 +105,8 @@ function performCalculation(param){
       console.log("logging " + param + " from pc function");
 
       //set a default result to 0.
-			var firstResult = 0;
-     
+			var result = 0;
+      
       try {
         
           if(param != "="){
@@ -117,16 +117,23 @@ function performCalculation(param){
 			    var value1 = inputs[0];
           var operation= inputs[1];
           var value2 = inputs[2];
-      
+           
 
           try{
               if(value1 != null && value2 != null){
                 console.log("performing calculation");
-                firstResult = eval(Number(value1) + operation + Number(value2));
-                console.log(firstResult);
-                updateDisplay(firstResult);
-                inputs[0] = firstResult;
-
+                result = eval(Number(value1) + operation + Number(value2));
+                var numberConverter = result.toString();
+                  if(numberConverter.length > 18 || numberConverter.length == 18){
+                      if(numberConverter.indexOf(".") != -1){
+                           result = result.toFixed(9);
+                      }else{
+                           result = Math.round(result);
+                      }
+                  }
+                console.log(result);
+                updateDisplay(result);
+                inputs[0] = result;
               }
             } catch (ex){ }
 
@@ -158,80 +165,19 @@ function performCalculation(param){
 			}
 }
 // performs the command of a Backspace button by deleteing the value before.
-    function performBackspace(){
-          var operator = inputs[1];
-          var workingValue = "";
-          var inputIndex = 0;
-          if(operator == null){
-              workingValue = inputs[0];
-              inputIndex = 0;
-          }else
-          {
-              workingValue = inputs[2];
-              inputIndex = 2;
-          }
-          workingValue = workingValue.substring(0, workingValue.length-1);
-          updateDisplay(workingValue);
-          inputs[inputIndex] = workingValue;
-     }
-
-	// Adds to numbers and displays sum in the result input box.
-		function add() {
-                   
-                   try {  
-  			
-			// get the first number.
-                   	var value1 = document.getElementById('addvalue1').value;
-			
-			// get the second number.
-			var value2=document.getElementById('addvalue2').value;
-			
-			// perform addition while converting text to number format
-			var sum = Number(value1) + Number(value2);
-			
-			// write result to the result text box.
-			document.getElementById('AddResult').value = sum;
-			}
-			catch( ex ) {
-  				
-				// log errors.
-				console.log('oops!');
-			}
-		}
-    
-    //subtracts numbers and displays differences in the subResults input box.
-    function subtract(){
-             try{
-               //gets first number.
-               var value1 = document.getElementById('subtractvalue1').value;
-              //gets the second number.
-               var value2= document.getElementById('subtractvalue2').value;
-               //Subtracts the numbers and saves it into a variable.
-               var difference = Number(value1) - Number(value2);
-               //displays the difference in the input box.
-               document.getElementById('SubtractResult').value =difference;
-              
-             }
-       catch(ex) {
-         console.log('oops!')
-       }
-    }
-    
-    
-     function multiply(){
-              try{
-                var value1 = document.getElementById('multiplyvalue1').value;
-                
-                var value2= document.getElementById('multiplyvalue2').value;
-                
-                var product = Number(value1) * Number(value2);
-
-        
-                
-                  
-               document.getElementById('MultiplyResult').value = product;
-              }
-             catch(ex) {
-         console.log('oops!')
-       }                           
-     } 
+function performBackspace(){
+      var operator = inputs[1];
+      var workingValue = "";
+      var inputIndex = 0;
+      if(operator == null){
+          workingValue = inputs[0];
+          inputIndex = 0;
+      }else
+      {
+          workingValue = inputs[2];
+          inputIndex = 2;
+      }
+      workingValue = workingValue.substring(0, workingValue.length-1);
+      updateDisplay(workingValue);
+      inputs[inputIndex] = workingValue;
+  }
