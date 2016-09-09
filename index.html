@@ -6,14 +6,15 @@
 <head>
 
  <meta charset="UTF-8"/>
- <title>Calculator</title>
+ <title>iCalculator</title>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
   <link rel="stylesheet" type="text/css" href="css/site.css"/>
 </head>
 
 <body> 
 
 	<header>   
-		<h1>Online Calculator</h1>
+		<h1>iCalculator</h1>
 		<h3>An online calculator created by Trinity Lawrence</h3>
 	</header>
 
@@ -27,69 +28,38 @@
             <button class="button-normal" value="7">7</button><button class="button-normal" value="8">8</button><button class="button-normal" value="9">9</button><button class="button-normal" value="=">=</button><button class="button-normal" value="/">/</button><button class="button-normal" value="4">4</button><button class="button-normal" value="5">5</button><button class="button-normal" value="6">6</button><button class="button-normal" value="<-"><-</button><button class="button-normal" value="*">x</button><button class="button-normal" value="1">1</button><button class="button-normal" value="2">2</button><button class="button-normal" value="3">3</button><button class="button-normal" value="C">C</button><button class="button-normal" value="-">-</button><button class="button-wide" value="0">0</button><button class="button-normal" value=".">.</button><button class="button-normal" value="+">+</button>
           </div>
         </section>
-      <!--<section id="addition">
-        <p>
-     			This is an addition calculator.
-		</p>
-      			<input id="addvalue1" type="text"/> + <input id="addvalue2" type="text"/> = <input id="AddResult" type="text" /> 
-			<button onClick="javascript:add(); return false;">add</button>
-      </section>
-
-	<section id="subtraction">
-  <p>
-        This is a subtraction calculator.
-  </p>
-    
-      <input id="subtractvalue1" type="text"/> - <input id="subtractvalue2" type="text"/> = <input id="SubtractResult" type="text"/>
-    <button onClick="javascript:subtract(); return false">subtract</button>
-	</section>  
-
-  <section id="multiplication">
-    <p> This is a multiplication calculator. </p>
-   
-        <input id="multiplyvalue1" type="text">* <input id="multiplyvalue2" type="text"> = <input id="MultiplyResult" input="text">
-      
-      <button onClick="javascript:multiply(); return false">multiply</button>
-  </section>-->
-
- 
   	</form>
-    
-    
-  
   </main>
-
- <aside>
-    
-  </aside>
-
-	
 <footer>
 		&copy 2016
 </footer>
- 
+  <script type="text/javascript" src="scripts/jquery-3.1.0.min.js"></script>
+  <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
 	<script type="text/javascript" src="scripts/calculator.js"></script>
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js"
-    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-    crossorigin="anonymous">
-  </script>
   <script type="text/javascript">
-    var buttons = $('button');
-    console.log(Calculator);
-    $('button').each(function(i, currentButton) {
-            console.log("proccessing button #" + i);
 
-            try{
-            $(currentButton).click(function(event){
-              console.log("adding listener");
-              Calculator.captureInput(this.value);
-              event.preventDefault();
-            });
-            } catch (ex){
-               console.log(ex);
-            }
+  var moduleLoaded = false;
+  
+      // create an instance of the calculator
+      var iCalculator = new Calculator('displayLabel');
+      CaptureUserInput = function(event){
+          //alert(this.value);
+          iCalculator.captureInput(this.value);
+          event.preventDefault();
+          event.stopPropagation();
+      };
 
-        });
+    // iterate through each button on the page and add an event listener
+    // for the click event.
+      var buttons = document.getElementById('buttons').getElementsByTagName('button');
+
+      for (var i = 0; i < buttons.length; i++) {
+            
+            var currentButton = buttons[i];
+            
+            // try to attach event listener to each button.
+            currentButton.addEventListener('click', CaptureUserInput, false);
+      };
   </script>
 </body>
 

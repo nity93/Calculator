@@ -1,187 +1,264 @@
 //The main calculator object responsible for performing calculations and returning results.
-var Calculator = {
-  //capture value from the button click event on the Calculator. 
-   captureInput:function(param){
-     //evaluate input and perform operation based on input type, i.e. an operator or a number has been entered.
-     switch(param){
-       case "+":
-        console.log("here");
+var Calculator = function( element ) {
+  
+    this.displayElement = element;
+    
+    //capture value from the button click event on the Calculator. 
+    this.captureInput = function( param ){
+
+    //evaluate input and perform operation based on input type, i.e. an operator or a number has been entered.
+    switch( param ){
+
+      case "+":
         performCalculation(param);
         break;
-        case "-":
-        performCalculation(param);
-        break;
-        case "*":
-        performCalculation(param);
-        break;
-        case "/":
-        console.log("wazzup");
-        performCalculation(param);
-        break;
-        case "=":
-        performCalculation(param);
-        break;
-        case "C":
-        clearCalculator();
-        break;
-        case "<-":
-        console.log("here");
-        performBackspace();
-        break;
+
+      case "-":
+          performCalculation(param);
+          break;
+
+      case "*":
+          performCalculation(param);
+          break;
+
+      case "/":
+          performCalculation(param);
+          break;
+
+      case "=":
+          performCalculation(param);
+          break;
+
+      case "C":
+          clearCalculator();
+          break;
+
+      case "<-":
+          performBackspace();
+          break;
+
+      case ".":
+          captureDecimal(param);
+          break;
+
         //if not an operator then process the numeric value.
-        default:
+      default:
           updateInputs(param);
-        break;
+          break;
      };
+     
    }
-}
 
-//create an input array to hold the values to be calculated as well as the operator.
-var inputs = [null,null,null];
+  //create an input array to hold the values to be calculated as well as the operator.
+  var inputs = [null,null,null];
 
-//sets the display back to 0 and clears the array.
-function clearCalculator(){
-  inputs = [null,null,null];
-  updateDisplay("0");
-}
-
-//determines if user is entering first value or second value and updates inputs array as well as the display.
-//based on the prescense of the operator.
-function updateInputs(param){
-  var value1 = inputs[0];
-  var value2 = inputs[2];
-  var operator = inputs[1];
-
-  if(operator == null){
-    if(value1 == null){
-      value1 = param;
-    } else {
-      value1 = value1 + param;
-    }
-    inputs[0] = value1;
-    updateDisplay(value1);
-  } else {
-    if(value2 == null){
-      value2 = param;
-    } else {
-      value2 = value2 + param;
-    }
-    inputs[2] = value2;
-    updateDisplay(value2);
+  //sets the display back to 0 and clears the array.
+  var clearCalculator = function(){
+    inputs = [null,null,null];
+    updateDisplay("0");
   }
 
-}
+  // ensures that only one decimal is present.
+  var captureDecimal = function (param){
+    var value = getDisplayValue();
 
-//displays the value that has been passed in on the calculator display.
-function updateDisplay(value){
-  $('#displayLabel').text(value);
-}
+    if(value != null || value != ""){
 
-//perform calculation based on the operator that has been entered as passed in 
-//in the param parameter.
-function performCalculation(param){
-      
-      console.log("logging " + param + " from pc function");
+      if(value.indexOf(".") < 0){
+        value += param;
+      }
 
-      //set a default result to 0.
-			var result = 0;
-
-      try {
-        
-          if(param == "="){
-
-          }else{
-            inputs[1] = param;
-          }
-      
-			    var value1 = inputs[0];
-          var operation= inputs[1];
-          var value2 = inputs[2];
-      
-
-          try{
-              if(value1 != null && value2 != null){
-                console.log("performing calculation");
-                result = eval(Number(value1) + operation + Number(value2));
-                console.log(result);
-                updateDisplay(result);
-              }
-            } catch (ex){
-
-          }
-
-              console.log(result);
-			}
-			catch( ex ) {
-  				
-				// log errors.
-				console.log(ex);
-			}
-}
-// performs the command of a Backspace button by deleteing the value before.
-function performBackspace(){
-           for(var i = 0; i < inputs.length; i++){
-       if(value2 && operation == null){
-         delete value1;
-       }else{
-         delete value2;
-       }
-     }
-
-	// Adds to numbers and displays sum in the result input box.
-		function add() {
-                   
-                   try {  
-  			
-			// get the first number.
-                   	var value1 = document.getElementById('addvalue1').value;
-			
-			// get the second number.
-			var value2=document.getElementById('addvalue2').value;
-			
-			// perform addition while converting text to number format
-			var sum = Number(value1) + Number(value2);
-			
-			// write result to the result text box.
-			document.getElementById('AddResult').value = sum;
-			}
-			catch( ex ) {
-  				
-				// log errors.
-				console.log('oops!');
-			}
-		}
-    
-    //subtracts numbers and displays differences in the subResults input box.
-    function subtract(){
-             try{
-               //gets first number.
-               var value1 = document.getElementById('subtractvalue1').value;
-              //gets the second number.
-               var value2= document.getElementById('subtractvalue2').value;
-               //Subtracts the numbers and saves it into a variable.
-               var difference = Number(value1) - Number(value2);
-               //displays the difference in the input box.
-               document.getElementById('SubtractResult').value =difference;
-             
-             }
-       catch(ex) {
-         console.log('oops!')
-       }
+    } else {
+        value = "0" + param;
     }
     
+    var value1 = inputs[0];
+    var value2 = inputs[2];
+    var operator = inputs[1];
+
+    if(operator == null){
+
+      if(value1 == null){
+
+        value1 = value;
+
+      } else if(value1.length == 9) {
+
+        value1 = value1;
+
+      } else {
+
+        value1 = value1 + param;
+        
+      }
+      inputs[0] = value1;
+    } else {
+      if(value2 == null){
+        value2 = value;
+      } else if(value2.length==9){
+        value2 = value2;
+      } else {
+        value2 = value2 + param;
+      }
+      inputs[2] = value2;
+    }
+
+    //update display
+    updateDisplay(value);
     
-     function multiply(){
-              try{
-                var value1 = document.getElementById('multiplyvalue1').value;
-                
-                var value2= document.getElementById('multiplyvalue2').value;
-                
-                var product = Number(value1) * Number(value2);
-                  
-               document.getElementById('MultiplyResult').value = product;
-              }
-             catch(ex) {
-         console.log('oops!')
-       }                           
-     } }
+  }
+
+  //determines if user is entering first value or second value and updates inputs array as well as the display.
+  //based on the prescense of the operator.
+  var updateInputs = function (param){
+    var value1 = inputs[0];
+    var value2 = inputs[2];
+    var operator = inputs[1];
+
+    // if no operator has been selected
+    if(operator == null){
+
+      // if no value has been stored for value1
+      if(value1 == null){
+
+        // set value1 to the value entered.
+        value1 = param;
+
+        // also if value 1 is already 9 characters, don't allow additional.
+      } else if(value1.length == 9) {
+
+        // set value1 to itself.
+        value1 = value1;
+
+      } else {
+
+        // if value1 is not yet 9 characters, set value1 equal to it's current value and the character entered
+        value1 = getDisplayValue() + param;
+      }
+
+      // update the input array for value 1
+      inputs[0] = value1;
+
+      // update the user display for value 1
+      updateDisplay(value1);
+
+      // if an operator is present, then value1 should have a value and the user is enterng value 2.
+    } else {
+
+      // if value2 is currently null, set value2 to the value that was entered.
+      if(value2 == null){
+
+        value2 = param;
+
+      // also, if value2 has 9 characters, set value2 to itself leaving it unchanged.
+      } else if(value2.length==9){
+
+        value2 = value2;
+
+      // otherwise, set value2 to the value itself plus the value entered.
+      } else {
+
+        value2 = value2 + param;
+      }
+
+      //update the input array for value2
+      inputs[2] = value2;
+
+      // update the display for value2
+      updateDisplay(value2);
+    }
+
+  }
+
+  //displays the value that has been passed in on the calculator display.
+  var updateDisplay = function (value){
+    document.getElementById('displayLabel').textContent = value;
+  }
+
+  //gets value in display.
+  var getDisplayValue = function(){
+    return document.getElementById('displayLabel').textContent;
+  }
+
+  //perform calculation based on the operator that has been entered as passed in 
+  //in the param parameter.
+  var performCalculation = function ( param ){
+        
+        console.log("logging " + param + " from pc function");
+
+        //set a default result to 0.
+        var result = 0;
+
+        try {
+          
+            if( param != "=" ){
+            
+                inputs[1] = param;
+            
+                var value1 = inputs[0];
+                var operation= inputs[1];
+                var value2 = inputs[2];
+            
+                try{
+                    if( value1 != null && value2 != null ) {
+
+                      console.log("performing calculation");
+                      result = eval(Number(value1) + operation + Number(value2));
+                      console.log(result);
+                      updateDisplay(result);
+                  }
+                } catch ( ex ){}
+            
+            } else {
+
+                // if the param is the = sign, all of the parameters should be captured
+                // perform calculation and reset the inputs
+                var value1 = inputs[0];
+                var operation= inputs[1];
+                var value2 = inputs[2];
+            
+                try{
+                    if( value1 != null && value2 != null ) {
+
+                      console.log("performing calculation");
+                      result = eval(Number(value1) + operation + Number(value2));
+                      console.log(result);
+                      updateDisplay(result);
+                  }
+                } catch ( ex ){}
+
+                // set inputs to null if '=' is pressed.
+                inputs = [null,null,null];
+            }
+
+            console.log(result);
+            
+        } catch( ex ) {
+            
+          // log errors.
+          console.log(ex);
+        }
+  }
+
+  // performs the command of a Backspace button by deleting the value before.
+  var performBackspace = function(){
+      
+      // get value being displayd
+      var value = getDisplayValue();
+
+      // if the value is not null nor an empty string perform substring subtracting last character.
+      if(value != null || value != ""){
+
+        // remove last character.
+        value = value.substr(0,value.length-1);
+        
+        //if all characters have been removed, set display to zero (?)
+        if(value.length < 1){
+          value = "0";
+        }
+      }
+      
+      // update the display with the updated value.
+      updateDisplay(value);
+  }
+}
