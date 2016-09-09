@@ -102,6 +102,10 @@ var Calculator = function( element ) {
       }
       inputs[2] = value2;
     }
+
+    //update display
+    updateDisplay(value);
+    
   }
 
   //determines if user is entering first value or second value and updates inputs array as well as the display.
